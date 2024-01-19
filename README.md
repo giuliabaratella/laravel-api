@@ -134,6 +134,13 @@ npm install
 
 # inserisco i dati per il collegamento al db in env
 
+#aggiungo a env
+APP_FRONTEND_URL= http://localhost:5174
+
+#modifico nel file config/cors
+    'allowed_origins' => [env('APP_FRONTEND_URL', 'http://localhost:3000')],
+
+
 #creo migration es.
 php artisan make:migration create_nome_tabella_table
 
