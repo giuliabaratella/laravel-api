@@ -3,27 +3,28 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\Project;
+use App\Models\Category;
 
-class ProjectController extends Controller
+use Illuminate\Http\Request;
+
+class CategoryController extends Controller
 {
     public function index()
     {
-        $projects = Project::with(['category', 'technologies'])->paginate(5);
+        $categories = Category::with(['projects'])->get();
         return response()->json([
             'success' => true,
-            'results' => $projects
+            'results' => $categories
         ]);
 
     }
 
     public function show($slug)
     {
-        $project = Project::where('slug', $slug)->with(['category', 'technologies'])->first();
+        $category = Category::where('slug', $slug)->with(['projects'])->first();
         return response()->json([
             'success' => true,
-            'results' => $project
+            'results' => $category
         ]);
     }
 }
