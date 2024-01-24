@@ -8,9 +8,16 @@ use App\Models\Project;
 
 class ProjectController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $projects = Project::with(['category', 'technologies'])->paginate(5);
+        // dd($request);
+        if (!empty($request->query('category'))) {
+            $category = $request->query('category');
+            $projects = Project::where('category_id', $category)->with(['category', 'technologies'])->get();
+
+        } else {
+            $projects = Project::with(['category', 'technologies'])->paginate(5);
+        }
         return response()->json([
             'success' => true,
             'results' => $projects
